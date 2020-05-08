@@ -77,7 +77,7 @@ public class RequirementsView extends ViewPart implements ISelectionListener{
     	lab_id = new Label(top, SWT.NONE);
     	lab_id.setText("需求ID:");
     	lab_id.setFont(boldFont);
-    	lab_id.setBounds(56, 40, 100, 60);
+    	lab_id.setBounds(20, 40, 100, 60);
 		//l.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
 		
     	txt_id = new Text(top, SWT.BORDER);
@@ -92,20 +92,20 @@ public class RequirementsView extends ViewPart implements ISelectionListener{
 		lab_title = new Label(top, SWT.NONE);
 		lab_title.setText("数量:");
 		lab_title.setFont(boldFont);
-		lab_title.setBounds(56, 120, 100, 60);
+		lab_title.setBounds(20, 100, 100, 60);
 		
 		txt_title = new Text(top, SWT.BORDER);
 		txt_title.setFont(new Font(display,"宋体",16,SWT.NORMAL));
-		txt_title.setBounds(120, 120, 500, 26);
+		txt_title.setBounds(120, 100, 500, 26);
 		
 		lab_content = new Label(top, SWT.NONE);
 		lab_content.setText("内容:");
 		lab_content.setFont(boldFont);
-		lab_content.setBounds(56, 210, 100, 60);
+		lab_content.setBounds(20, 160, 100, 60);
 		
 		txt_content = new Text(top, SWT.BORDER|SWT.WRAP|SWT.V_SCROLL|SWT.MULTI);
 		txt_content.setFont(new Font(display,"宋体",16,SWT.NORMAL));
-		txt_content.setBounds(120, 210, 500, 400);
+		txt_content.setBounds(120, 160, 500, 400);
 		
 		
 		

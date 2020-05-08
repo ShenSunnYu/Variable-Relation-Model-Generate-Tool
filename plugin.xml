@@ -30,7 +30,8 @@
             name="测试用例集"
             restorable="true">
       </view>
-      <view
+      
+       <view
             allowMultiple="true"
             icon="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/obj16/nested_projects.png"
             class="vrm_generate_tool.NavigationView"
@@ -45,6 +46,63 @@
             inject="true"
             name="变量"
             restorable="true">
+      </view>
+       <view
+            allowMultiple="false"
+            class="vrm_generate_tool.RequirementsView"
+            icon="platform:/plugin/org.eclipse.ui.views/icons/full/eview16/outline_co.png"
+            id="Variable-Relation-Model-Generate-Tool.RequirementsView"
+            inject="true"
+            name="原始需求">
+      </view>
+       <view
+            allowMultiple="true"
+            icon="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/obj16/nested_projects.png"
+            class="vrm_generate_tool.DataTypeView"
+            name="数据类型"
+            id="Variable-Relation-Model-Generate-Tool.DataTypeView">
+      </view>
+      <view
+            allowMultiple="true"
+            icon="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/obj16/nested_projects.png"
+            class="vrm_generate_tool.ProperNounView"
+            name="专有名词"
+            id="Variable-Relation-Model-Generate-Tool.ProperNounView">
+      </view>
+      <view
+            allowMultiple="true"
+            icon="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/obj16/nested_projects.png"
+            class="vrm_generate_tool.ConstNumView"
+            name="常量"
+            id="Variable-Relation-Model-Generate-Tool.ConstNumView">
+      </view>
+      <view
+            allowMultiple="true"
+            icon="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/obj16/nested_projects.png"
+            class="vrm_generate_tool.InputVariableView"
+            name="输入变量"
+            id="Variable-Relation-Model-Generate-Tool.InputVariableView">
+      </view>
+      <view
+            allowMultiple="true"
+            icon="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/obj16/nested_projects.png"
+            class="vrm_generate_tool.OutputVariableView"
+            name="输出变量"
+            id="Variable-Relation-Model-Generate-Tool.OutputVariableView">
+      </view>
+      <view
+            allowMultiple="true"
+            icon="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/obj16/nested_projects.png"
+            class="vrm_generate_tool.MiddleVariableView"
+            name="中间变量"
+            id="Variable-Relation-Model-Generate-Tool.MiddleVariableView">
+      </view>
+      <view
+            allowMultiple="true"
+            icon="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/obj16/nested_projects.png"
+            class="vrm_generate_tool.PatternView"
+            name="模式类"
+            id="Variable-Relation-Model-Generate-Tool.PatternView">
       </view>
       <view
             allowMultiple="false"
@@ -82,17 +140,7 @@
             name="显示事件"
             restorable="true">
       </view>
-      
-      
-      
-      <view
-            allowMultiple="false"
-            class="vrm_generate_tool.RequirementsView"
-            icon="platform:/plugin/org.eclipse.ui.views/icons/full/eview16/outline_co.png"
-            id="Variable-Relation-Model-Generate-Tool.RequirementsView"
-            inject="true"
-            name="原始需求">
-      </view>
+     
       <view
             class="vrm_generate_tool.MenuExplorer"
             id="Variable-Relation-Model-Generate-Tool.MenuExplorer"

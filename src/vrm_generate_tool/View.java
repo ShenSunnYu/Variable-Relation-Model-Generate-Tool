@@ -71,7 +71,7 @@ public class View extends ViewPart implements ISelectionListener{
 					getActivePage().
 					showView(RequirementsView.ID, "RequirementsView", IWorkbenchPage.VIEW_ACTIVATE);
 					System.out.print("！！！！！"+is.toString());
-				}else if((is.toString()).equals("[数据类型]")) {
+				}else if((is.toString()).equals("[通用条件]")) {
 //					System.out.print("！！！！！"+is.toString());
 					PlatformUI.getWorkbench().
 					getActiveWorkbenchWindow().

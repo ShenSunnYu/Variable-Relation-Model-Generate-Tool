@@ -246,6 +246,41 @@ public class NavigationView extends ViewPart implements ISelectionListener{
 					getActivePage().
 					showView(RequirementsView.ID, "原始需求", IWorkbenchPage.VIEW_ACTIVATE);
 					System.out.print("！！！！！"+is.toString());
+				}else if(iString.equals("数据类型")) {
+					PlatformUI.getWorkbench().
+					getActiveWorkbenchWindow().
+					getActivePage().
+					showView(DataTypeView.ID, "数据类型", IWorkbenchPage.VIEW_ACTIVATE);
+				}else if(iString.equals("专有名词")) {
+					PlatformUI.getWorkbench().
+					getActiveWorkbenchWindow().
+					getActivePage().
+					showView(ProperNounView.ID, "专有名词", IWorkbenchPage.VIEW_ACTIVATE);
+				}else if(iString.equals("常量")) {
+					PlatformUI.getWorkbench().
+					getActiveWorkbenchWindow().
+					getActivePage().
+					showView(ConstNumView.ID, "常量", IWorkbenchPage.VIEW_ACTIVATE);
+				}else if(iString.equals("输入变量")) {
+					PlatformUI.getWorkbench().
+					getActiveWorkbenchWindow().
+					getActivePage().
+					showView(InputVariableView.ID, "输入变量", IWorkbenchPage.VIEW_ACTIVATE);
+				}else if(iString.equals("输出变量")) {
+					PlatformUI.getWorkbench().
+					getActiveWorkbenchWindow().
+					getActivePage().
+					showView(OutputVariableView.ID, "输出变量", IWorkbenchPage.VIEW_ACTIVATE);
+				}else if(iString.equals("中间变量")) {
+					PlatformUI.getWorkbench().
+					getActiveWorkbenchWindow().
+					getActivePage().
+					showView(MiddleVariableView.ID, "中间变量", IWorkbenchPage.VIEW_ACTIVATE);
+				}else if(iString.equals("模式类")) {
+					PlatformUI.getWorkbench().
+					getActiveWorkbenchWindow().
+					getActivePage().
+					showView(PatternView.ID, "模式类", IWorkbenchPage.VIEW_ACTIVATE);
 				}else if(iString.equals("通用条件")) {
 					System.out.println(iString.toString());
 					PlatformUI.getWorkbench().

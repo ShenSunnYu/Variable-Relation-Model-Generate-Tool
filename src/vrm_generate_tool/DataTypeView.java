@@ -95,7 +95,7 @@ public class DataTypeView extends ViewPart implements ISelectionListener{
 		co_type.add("String");
 		co_type.add("Structure");
 		co_type.add("Unsigned");
-		co_type.setBounds(120, 100, 100, 60);
+		co_type.setBounds(120, 100, 500, 60);
 		
 		lab_range = new Label(top, SWT.NONE);
 		lab_range.setText("÷µ”Ú:");

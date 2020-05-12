@@ -50,7 +50,10 @@ public class OutputVariableView extends ViewPart implements ISelectionListener{
 		Composite top = new Composite(parent, SWT.NONE);
 //		GridLayout layout = new GridLayout();
 //		layout.marginHeight = 2;
-//		layout.marginWidth = 2;
+//		layout.marginWidth = 2  --
+		;
+		
+		
 //		top.setLayout(layout);
 		
 		// top banner

@@ -209,11 +209,11 @@
          id="product"
          point="org.eclipse.core.runtime.products">
       <product
-            name="AUTO TestCase-generate Tool"
+            name="Variable-Relation-Model-Generate-Tool"
             application="Variable-Relation-Model-Generate-Tool.application">
          <property
                name="aboutText"
-               value="自动测试用例生成工具">
+               value="用例建模工具">
          </property>
          <property
                name="windowImages"
@@ -225,7 +225,7 @@
          </property>
          <property
                name="appName"
-               value="AUTO TestCase-generate Tool">
+               value="Variable-Relation-Model-Generate-Tool">
          </property>
          <property
                name="startupForegroundColor"
@@ -434,31 +434,18 @@
       <menuContribution
             allPopups="false"
             locationURI="popup:Variable-Relation-Model-Generate-Tool.navigationView?after=additions">
-         <command
-               commandId="Variable-Relation-Model-Generate-Tool.generateTestCase"
+         <command   
+               commandId="Variable-Relation-Model-Generate-Tool.NavigationView"
                icon="platform:/plugin/org.eclipse.jdt.ui/icons/full/etool16/new_testcase.png"
-               label="生成测试用例集"
+               label="新建"
                style="push">
          </command>
-         <command
-               commandId="Variable-Relation-Model-Generate-Tool.copy"
+         <command             
+               commandId="Variable-Relation-Model-Generate-Tool.NavigationView"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/copy_edit.png"
-               label="复制"
+               label="删除"
                style="push">
-         </command>
-         <command
-               commandId="Variable-Relation-Model-Generate-Tool.manalDesign"
-               label="为此需求手动设计界面"
-               style="push">
-         </command>
-         <separator
-               name="Variable-Relation-Model-Generate-Tool.separator3">
-         </separator>
-         <command
-               commandId="Variable-Relation-Model-Generate-Tool.showInfo"
-               label="属性"
-               style="push">
-         </command>
+         </command>       
       </menuContribution>
    </extension>
    <extension

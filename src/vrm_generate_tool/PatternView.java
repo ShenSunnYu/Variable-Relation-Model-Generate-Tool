@@ -181,9 +181,11 @@ public class PatternView extends ViewPart implements ISelectionListener{
         		editor.setEditor(button, items[i], j);
         	}
         	else
-        	{continue;}
+        	{
+        		editor.setEditor(text, items[i], j);;
         	}
         }
+    }
         
        //viewForm.setContent(top);
        /* 

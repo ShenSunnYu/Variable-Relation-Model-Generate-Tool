@@ -16,12 +16,27 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MenuAdapter;
+import org.eclipse.swt.events.MenuEvent;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPage;
@@ -40,12 +55,12 @@ import vrm_generate_tool.NavigationView.TreeParent;
  *
  */
 public class NavigationView extends ViewPart implements ISelectionListener{
-	public static final String ID = "Variable-Relation-Model-Generate-Tool.navigationView";
+	public static final String ID = "Variable-Relation-Model-Generate-Tool.NavigationView";
 	private TreeViewer viewer;
 	   private MenuManager fMenuMgr; 
 	   private Menu fMenu; 
 
-	class TreeObject {
+	class TreeObject{
 		private String name;
 		private TreeParent parent;
 
@@ -148,8 +163,9 @@ public class NavigationView extends ViewPart implements ISelectionListener{
 	 * We will set up a dummy model to initialize tree heararchy. In real
 	 * code, you will connect to a real model and expose its hierarchy.
 	 */
+	
 	private TreeObject createDummyModel() {
-		TreeObject require = new TreeObject("原始需求");
+		final TreeObject require = new TreeObject("原始需求");
 		TreeObject dataType = new TreeObject("数据类型");
 		
 		//领域概念库的树形结构
@@ -188,7 +204,9 @@ public class NavigationView extends ViewPart implements ISelectionListener{
 		root.addChild(dataType);
 		root.addChild(conceptLib);
 		root.addChild(requirements);
+		 
 		return root;
+		
 	}
 
 	@Override
@@ -212,7 +230,128 @@ public class NavigationView extends ViewPart implements ISelectionListener{
 		
 		getSite().setSelectionProvider(viewer);
 		
-	}
+		//Tree tree = new Tree(parent, SWT.BORDER | SWT.CHECK);
+		//viewer = new TreeViewer(group, SWT.BORDER);
+		Tree tree = viewer.getTree();
+		menu=new Menu(tree);
+        MenuItem newItem=new MenuItem(menu,SWT.PUSH);
+        newItem.setText("新建");
+        tree.setMenu(menu);
+        
+        //加监听
+        newItem.addSelectionListener(new SelectionAdapter(){
+    	   @Override
+    	   public void widgetSelected(SelectionEvent e) {
+    		   ISelection selection=(IStructuredSelection)e;
+    		   if(selection!= null){
+    			   IStructuredSelection is = (IStructuredSelection)selection;
+    			   try {
+   					if(is.toString().equals("[原始需求]")) {
+   						//iString = iString.substring(1,iString.indexOf(']'));
+   						if(e.toString().equals("[新建]")) {
+   							PlatformUI.getWorkbench().
+   							getActiveWorkbenchWindow().
+   							getActivePage().
+   							showView(RequirementsView.ID, "原始需求", IWorkbenchPage.VIEW_ACTIVATE);
+   						}
+   					}
+   				}catch (Exception ex) {
+   						// TODO: handle exception
+   						ex.printStackTrace();
+   					}
+    		   }
+    	   }
+       });
+        
+        MenuItem deleteItem=new MenuItem(menu, SWT.PUSH);    
+        deleteItem.setText("删除");
+        tree.setMenu(menu);
+        
+       /* menu.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+            }
+        });*/
+       
+        /*
+        tree.addMouseListener(new MouseAdapter() {
+        	@Override
+			public void mouseDown(MouseEvent e) {
+				// TODO Auto-generated method stub
+				//Point point = Display.getCurrent().getCursorLocation();  
+				//IStructuredSelection is = (IStructuredSelection)e;
+				//String iString = is.toString();
+				//iString = iString.substring(3,iString.indexOf(']'));
+				try {
+					if(e.toString().equals("原始需求")) {
+						//iString = iString.substring(1,iString.indexOf(']'));
+						if(e.toString().equals("新建")) {
+							PlatformUI.getWorkbench().
+							getActiveWorkbenchWindow().
+							getActivePage().
+							showView(RequirementsView.ID, "原始需求", IWorkbenchPage.VIEW_ACTIVATE);
+						}
+					}
+				}catch (Exception ex) {
+						// TODO: handle exception
+						ex.printStackTrace();
+					}
+				
+				//System.out.println("新建、删除已启动");
+        }			
+     });
+        /*	 tree.addSelectionListener(new SelectionAdapter() {
+        	public void widgetSelected(SelectionEvent e) {
+        		try {
+        				if(e.toString().equals("原始需求")) {
+        						if(e.toString().equals("新建")) {
+        							PlatformUI.getWorkbench().
+        							getActiveWorkbenchWindow().
+        							getActivePage().
+        							showView(RequirementsView.ID, "原始需求", IWorkbenchPage.VIEW_ACTIVATE);
+        					}
+        				}
+        			}catch (Exception ex) {
+    						// TODO: handle exception
+    						ex.printStackTrace();
+    					}
+        			}       	
+        	});*/
+     }
+        /* 
+        MenuItem addNode=new MenuItem(menu,SWT.PUSH);
+        addNode.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+            }
+        });
+        //addNode.setText("添加节点");
+        
+        
+        MenuItem deleteNode=new MenuItem(menu, SWT.PUSH);
+        deleteNode.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+            }
+        });
+        //deleteNode.setText("删除节点");
+        tree.setMenu(menu);
+        
+            
+        fMenu.addMenuListener(new MenuAdapter()
+        {
+            public void menuShown(MenuEvent e)
+            {
+                MenuItem[] items = fMenu.getItems();
+                for (int i = 0; i < items.length; i++)
+                {
+                    items[i].dispose();
+                }
+                MenuItem newItem = new MenuItem(fMenu,SWT.NONE);
+                newItem.setText("Menu for " + tree.getSelection()[0].getText());
+            }
+        });*/
+		
 
 	private void hookContextMenu() { 
 	       fMenuMgr = new MenuManager("#PopupMenu"); 
@@ -232,6 +371,7 @@ public class NavigationView extends ViewPart implements ISelectionListener{
 		viewer.getControl().setFocus();
 	}
 
+	
 	@Override
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
 		ConsoleHandler.info("detetct change\n");
@@ -240,13 +380,17 @@ public class NavigationView extends ViewPart implements ISelectionListener{
 			String iString = is.toString();
 			iString = iString.substring(1,iString.indexOf(']'));
 			try {
-				if(iString.equals("原始需求")) {
-					PlatformUI.getWorkbench().
-					getActiveWorkbenchWindow().
-					getActivePage().
-					showView(RequirementsView.ID, "原始需求", IWorkbenchPage.VIEW_ACTIVATE);
-					System.out.print("！！！！！"+is.toString());
-				}else if(iString.equals("数据类型")) {
+			/*	if(iString.equals("原始需求")) {
+						iString = iString.substring(1,iString.indexOf(']'));
+						if(iString.equals("新建")) {
+							PlatformUI.getWorkbench().
+							getActiveWorkbenchWindow().
+							getActivePage().
+							showView(RequirementsView.ID, "原始需求", IWorkbenchPage.VIEW_ACTIVATE);
+							System.out.print("！！！！！"+is.toString());
+					}
+				}else*/
+					if(iString.equals("数据类型")) {
 					PlatformUI.getWorkbench().
 					getActiveWorkbenchWindow().
 					getActivePage().

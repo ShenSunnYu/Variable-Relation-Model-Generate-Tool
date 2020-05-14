@@ -189,21 +189,6 @@
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
-      <key
-            commandId="Variable-Relation-Model-Generate-Tool.open"
-            sequence="CTRL+SHIFT+O"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
-      </key>
-      <key
-            commandId="Variable-Relation-Model-Generate-Tool.openMessage"
-            sequence="CTRL+SHIFT+M"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
-      </key>
-      <key
-            commandId="org.eclipse.ui.file.exit"
-            sequence="CTRL+SHIFT+Q"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
-      </key>
    </extension>
    <extension
          id="product"
@@ -319,10 +304,6 @@
                   icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/undo_edit.png"
                   label="撤销"
                   style="push">
-               <parameter
-                     name="Variable-Relation-Model-Generate-Tool.operation"
-                     value="open">
-               </parameter>
             </command>
             <command
                   commandId="Variable-Relation-Model-Generate-Tool.redoCommand"
@@ -439,6 +420,7 @@
                icon="platform:/plugin/org.eclipse.jdt.ui/icons/full/etool16/new_testcase.png"
                label="新建"
                style="push">
+               
          </command>
          <command             
                commandId="Variable-Relation-Model-Generate-Tool.NavigationView"

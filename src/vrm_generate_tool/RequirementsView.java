@@ -1,6 +1,6 @@
 package vrm_generate_tool;
 
-import java.awt.List;
+
 import java.util.ArrayList;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.JFaceResources;
@@ -13,12 +13,16 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
+import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
@@ -34,7 +38,7 @@ import org.eclipse.nebula.widgets.grid.*;
 
 /**
  * 
- * @author 崔国楠
+ * @author 崔国楠、沈翔宇
  * 
  * 原始需求页面
  *
@@ -46,22 +50,52 @@ public class RequirementsView extends ViewPart implements ISelectionListener{
 	/**
 	 * The text control that's displaying the content of the email message.
 	 */
-	private Label lab_id;//需求ID
-	private Label lab_title;//标题
-	private Label lab_content;//标题
-	private Text  txt_id;//需求输入框
-	private Text  txt_title;//标题输入框
-	private Text  txt_content;//内容输入框
+	//private Label lab_id;//需求ID
+	//private Label lab_title;//标题
+	//private Text  txt_id;//需求输入框
+	//private Text  txt_title;//标题输入框
+	//private Text  txt_content;//内容输入框
 //	public static String requirementID = "R1.1";
 //	private Label requireID ;
 	@Override
 	public void createPartControl(Composite parent) {
 		Composite top = new Composite(parent, SWT.NONE);
-//		GridLayout layout = new GridLayout();
-//		layout.marginHeight = 2;
-//		layout.marginWidth = 2;
-//		top.setLayout(layout);
+		GridLayout layout = new GridLayout();
+		layout.numColumns=8;
+		layout.horizontalSpacing=10;
+		top.setLayout(layout);
 		
+		new Label(top,SWT.NONE).setText("需求ID:");
+		Text text1=new Text(top, SWT.SINGLE | SWT.BORDER);		
+		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);         
+		gridData.horizontalSpan = 3;         
+		text1.setLayoutData(gridData);
+		//text1.setBounds(150, 40, 80, 60);
+		
+		List categories = new List(top, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);        
+		//categories.setItems(new String [] {"Best of Breed", "Prettiest Female", "Handsomest Male","Best Dressed", "Fluffiest Ears", "Most Colors",             "Best Performer", "Loudest Bark", "Best Behaved","Prettiest Eyes", "Most Hair", "Longest Tail","Cutest Trick"});        
+		gridData = new GridData(GridData.FILL_HORIZONTAL,GridData.FILL_VERTICAL);  
+		gridData.horizontalSpan = 4;  
+		gridData.verticalSpan = 3;   
+		//gridData1.grabExcessVerticalSpace=true;
+		//int listHeight = categories.getItemHeight() * 12;        
+		//Rectangle trim = categories.computeTrim(0, 0, 0, listHeight);        
+		//gridData1.heightHint = trim.height;        
+		categories.setLayoutData(gridData);  
+		
+		new Label(top,SWT.NONE).setText("数量:");
+		Text text2=new Text(top, SWT.SINGLE | SWT.BORDER);
+		text2.setBounds(150, 100, 80, 60);
+		gridData = new GridData(GridData.FILL_HORIZONTAL);         
+		gridData.horizontalSpan = 3;         
+		text2.setLayoutData(gridData);
+		
+		new Label(top,SWT.NONE).setText("内容:");
+		Text text3=new Text(top, SWT.SINGLE | SWT.BORDER);
+		gridData = new GridData(GridData.FILL_HORIZONTAL,GridData.FILL_VERTICAL);         
+		gridData.horizontalSpan = 3;
+		//gridData3.grabExcessVerticalSpace=true;
+		text3.setLayoutData(gridData);
 		// top banner
 //		Composite banner = new Composite(top, SWT.NONE);
 //		banner.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL, GridData.VERTICAL_ALIGN_BEGINNING, true, false));
@@ -71,18 +105,23 @@ public class RequirementsView extends ViewPart implements ISelectionListener{
 //		layout.numColumns = 3;
 //		banner.setLayout(layout);
 		
+		//GridData gridData=new GridData();
+		//gridData.verticalAlignment=GridData.FILL;//垂直方向充满
 		// setup bold font
+		/*		
 		Display display = Display.getDefault();
 		Font boldFont = JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT);    	
     	lab_id = new Label(top, SWT.NONE);
     	lab_id.setText("需求ID:");
     	lab_id.setFont(boldFont);
-    	lab_id.setBounds(20, 40, 100, 60);
+    	lab_id.setBounds(10, 40, 80, 60);
+    	lab_id.setLayoutData(gridData);
 		//l.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
 		
     	txt_id = new Text(top, SWT.BORDER);
     	txt_id.setFont(new Font(display,"宋体",16,SWT.NORMAL));
-		txt_id.setBounds(120, 40, 500, 26);
+		txt_id.setBounds(90, 40, 300, 26);
+		txt_id.setLayoutData(gridData);
 	   // text.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
 		
 //		requireID = new Label(banner, SWT.WRAP);
@@ -92,22 +131,24 @@ public class RequirementsView extends ViewPart implements ISelectionListener{
 		lab_title = new Label(top, SWT.NONE);
 		lab_title.setText("数量:");
 		lab_title.setFont(boldFont);
-		lab_title.setBounds(20, 100, 100, 60);
-		
+		lab_title.setBounds(10, 100, 80, 60);
+		lab_title.setLayoutData(gridData);
+
 		txt_title = new Text(top, SWT.BORDER);
 		txt_title.setFont(new Font(display,"宋体",16,SWT.NORMAL));
-		txt_title.setBounds(120, 100, 500, 26);
+		txt_title.setBounds(90, 100, 300, 26);
+		txt_title.setLayoutData(gridData);
 		
 		lab_content = new Label(top, SWT.NONE);
 		lab_content.setText("内容:");
 		lab_content.setFont(boldFont);
-		lab_content.setBounds(20, 160, 100, 60);
+		lab_content.setBounds(10, 160, 80,60);
+		lab_content.setLayoutData(gridData);
 		
 		txt_content = new Text(top, SWT.BORDER|SWT.WRAP|SWT.V_SCROLL|SWT.MULTI);
 		txt_content.setFont(new Font(display,"宋体",16,SWT.NORMAL));
-		txt_content.setBounds(120, 160, 500, 400);
-		
-		
+		txt_content.setBounds(90, 160, 300, 200);
+		txt_content.setLayoutData(gridData);*/
 		
 //		l.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
 //    

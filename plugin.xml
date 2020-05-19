@@ -171,7 +171,7 @@
             name="打开">
       </command>
       <command
-            id="Variable-Relation-Model-Generate-Tool.inport"
+            id="Variable-Relation-Model-Generate-Tool.importCommand"
             name="导入需求">
       </command>
       <command
@@ -420,6 +420,12 @@
                icon="platform:/plugin/org.eclipse.jdt.ui/icons/full/etool16/new_testcase.png"
                label="新建"
                style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <instanceof
+                     value="selection">
+               </instanceof>
+            </visibleWhen>
                
          </command>
          <command             
@@ -457,6 +463,10 @@
       <handler
             class="org.eclipse.ui.internal.handlers.HelpContentsHandler"
             commandId="Variable-Relation-Model-Generate-Tool.helpCommand">
+      </handler>
+      <handler
+            class="handler.ImportHandler"
+            commandId="Variable-Relation-Model-Generate-Tool.importCommand">
       </handler>
    </extension>
 

@@ -1,6 +1,5 @@
 package vrm_generate_tool;
 
-
 import java.util.ArrayList;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.JFaceResources;
@@ -24,6 +23,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
@@ -35,121 +37,93 @@ import org.eclipse.ui.part.ViewPart;
 import org.omg.CORBA.PUBLIC_MEMBER;
 import org.eclipse.nebula.widgets.grid.*;
 
-
 /**
  * 
  * @author 崔国楠、沈翔宇
  * 
- * 原始需求页面
+ *         原始需求页面
  *
  */
-public class RequirementsView extends ViewPart implements ISelectionListener{
+public class RequirementsView extends ViewPart implements ISelectionListener {
 
 	public static final String ID = "Variable-Relation-Model-Generate-Tool.RequirementsView";
 
 	/**
 	 * The text control that's displaying the content of the email message.
 	 */
-	//private Label lab_id;//需求ID
-	//private Label lab_title;//标题
-	//private Text  txt_id;//需求输入框
-	//private Text  txt_title;//标题输入框
-	//private Text  txt_content;//内容输入框
+	private Label lab_id;// 需求ID
+	// private Label lab_title;//标题
+	private Label lab_content;
+	private Text txt_id;// 需求输入框
+	// private Text txt_title;//标题输入框
+	private Text txt_content;// 内容输入框
+	private List rightList;
+	private Table tab;
+
 //	public static String requirementID = "R1.1";
 //	private Label requireID ;
 	@Override
 	public void createPartControl(Composite parent) {
 		Composite top = new Composite(parent, SWT.NONE);
-		GridLayout layout = new GridLayout();
-		layout.numColumns=8;
-		layout.horizontalSpacing=10;
-		top.setLayout(layout);
-		
-		new Label(top,SWT.NONE).setText("需求ID:");
-		Text text1=new Text(top, SWT.SINGLE | SWT.BORDER);		
-		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);         
-		gridData.horizontalSpan = 3;         
-		text1.setLayoutData(gridData);
-		//text1.setBounds(150, 40, 80, 60);
-		
-		List categories = new List(top, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);        
-		//categories.setItems(new String [] {"Best of Breed", "Prettiest Female", "Handsomest Male","Best Dressed", "Fluffiest Ears", "Most Colors",             "Best Performer", "Loudest Bark", "Best Behaved","Prettiest Eyes", "Most Hair", "Longest Tail","Cutest Trick"});        
-		gridData = new GridData(GridData.FILL_HORIZONTAL,GridData.FILL_VERTICAL);  
-		gridData.horizontalSpan = 4;  
-		gridData.verticalSpan = 3;   
-		//gridData1.grabExcessVerticalSpace=true;
-		//int listHeight = categories.getItemHeight() * 12;        
-		//Rectangle trim = categories.computeTrim(0, 0, 0, listHeight);        
-		//gridData1.heightHint = trim.height;        
-		categories.setLayoutData(gridData);  
-		
-		new Label(top,SWT.NONE).setText("数量:");
-		Text text2=new Text(top, SWT.SINGLE | SWT.BORDER);
-		text2.setBounds(150, 100, 80, 60);
-		gridData = new GridData(GridData.FILL_HORIZONTAL);         
-		gridData.horizontalSpan = 3;         
-		text2.setLayoutData(gridData);
-		
-		new Label(top,SWT.NONE).setText("内容:");
-		Text text3=new Text(top, SWT.SINGLE | SWT.BORDER);
-		gridData = new GridData(GridData.FILL_HORIZONTAL,GridData.FILL_VERTICAL);         
-		gridData.horizontalSpan = 3;
-		//gridData3.grabExcessVerticalSpace=true;
-		text3.setLayoutData(gridData);
-		// top banner
-//		Composite banner = new Composite(top, SWT.NONE);
-//		banner.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL, GridData.VERTICAL_ALIGN_BEGINNING, true, false));
-//		layout = new GridLayout();
-//		layout.marginHeight = 5;
-//		layout.marginWidth = 10;
-//		layout.numColumns = 3;
-//		banner.setLayout(layout);
-		
-		//GridData gridData=new GridData();
-		//gridData.verticalAlignment=GridData.FILL;//垂直方向充满
-		// setup bold font
-		/*		
-		Display display = Display.getDefault();
-		Font boldFont = JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT);    	
-    	lab_id = new Label(top, SWT.NONE);
-    	lab_id.setText("需求ID:");
-    	lab_id.setFont(boldFont);
-    	lab_id.setBounds(10, 40, 80, 60);
-    	lab_id.setLayoutData(gridData);
-		//l.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
-		
-    	txt_id = new Text(top, SWT.BORDER);
-    	txt_id.setFont(new Font(display,"宋体",16,SWT.NORMAL));
-		txt_id.setBounds(90, 40, 300, 26);
-		txt_id.setLayoutData(gridData);
-	   // text.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
-		
-//		requireID = new Label(banner, SWT.WRAP);
-//		requireID.setText("");
-//		requireID.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, true, false));
-		
-		lab_title = new Label(top, SWT.NONE);
-		lab_title.setText("数量:");
-		lab_title.setFont(boldFont);
-		lab_title.setBounds(10, 100, 80, 60);
-		lab_title.setLayoutData(gridData);
+		// GridLayout layout = new GridLayout();
+		// layout.numColumns=8;
+		// layout.horizontalSpacing=10;
+		// top.setLayout(layout);
 
-		txt_title = new Text(top, SWT.BORDER);
-		txt_title.setFont(new Font(display,"宋体",16,SWT.NORMAL));
-		txt_title.setBounds(90, 100, 300, 26);
-		txt_title.setLayoutData(gridData);
-		
+		// new Label(top,SWT.NONE).setText("需求ID:");
+		// Text text1=new Text(top, SWT.SINGLE | SWT.BORDER);
+		// GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+		// gridData.horizontalSpan = 3;
+		// text1.setLayoutData(gridData);
+
+		// List categories = new List(top, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
+		// categories.setItems(new String [] {"Best of Breed", "Prettiest Female",
+		// "Handsomest Male","Best Dressed", "Fluffiest Ears", "Most Colors", "Best
+		// Performer", "Loudest Bark", "Best Behaved","Prettiest Eyes", "Most Hair",
+		// "Longest Tail","Cutest Trick"});
+		// gridData = new GridData(GridData.FILL_HORIZONTAL,GridData.FILL_VERTICAL);
+		// gridData.horizontalSpan = 4;
+		// gridData.verticalSpan = 3;
+		// categories.setLayoutData(gridData);
+
+		Display display = Display.getDefault();
+		Font boldFont = JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT);
+		lab_id = new Label(top, SWT.NONE);
+		lab_id.setText("需求ID:");
+		lab_id.setFont(boldFont);
+		lab_id.setBounds(10, 40, 80, 60);
+
+		txt_id = new Text(top, SWT.BORDER|SWT.READ_ONLY);
+		txt_id.setFont(new Font(display, "宋体", 16, SWT.NORMAL));
+		txt_id.setBounds(90, 40, 300, 26);
+
 		lab_content = new Label(top, SWT.NONE);
 		lab_content.setText("内容:");
 		lab_content.setFont(boldFont);
-		lab_content.setBounds(10, 160, 80,60);
-		lab_content.setLayoutData(gridData);
+		lab_content.setBounds(10, 110, 80, 60);
+
+		txt_content = new Text(top, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI|SWT.READ_ONLY);
+		txt_content.setFont(new Font(display, "宋体", 16, SWT.NORMAL));
+		txt_content.setBounds(90, 110, 300, 350);
+
+		// 创建右侧列表框
+		tab = new Table(top, SWT.MULTI | SWT.V_SCROLL | SWT.BORDER | SWT.WRAP|SWT.READ_ONLY);
+		// 为右侧列表框填充字符串
+		// String[] rightItems=new String[0];
+		// tab.setItems(rightItems);
+		// 为右侧列表框设置位置和大小
+		TableColumn numColumn = new TableColumn(tab, SWT.NONE);
+		numColumn.setText("编号(num)");
+		TableColumn contentColumn = new TableColumn(tab, SWT.NONE);
+		contentColumn.setText("内容(content)");
+		tab.setBounds(480, 40, 800, 420);
+		numColumn.setWidth(100);
+		contentColumn.setWidth(700);
+		tab.setLinesVisible(true);
+		tab.setHeaderVisible(true);
 		
-		txt_content = new Text(top, SWT.BORDER|SWT.WRAP|SWT.V_SCROLL|SWT.MULTI);
-		txt_content.setFont(new Font(display,"宋体",16,SWT.NORMAL));
-		txt_content.setBounds(90, 160, 300, 200);
-		txt_content.setLayoutData(gridData);*/
-		
+		// rightList.add(fileContent());
+
 //		l.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
 //    
 //		final Link link = new Link(top, SWT.NONE);
@@ -227,13 +201,16 @@ public class RequirementsView extends ViewPart implements ISelectionListener{
 //		preCon.setExpanded(true);
 //		
 		getSite().getPage().addSelectionListener((ISelectionListener) this);
-	
+
 	}
 
+	public void fileContent(String num, String content) {
 
- 
+		TableItem tableItem = new TableItem(tab, SWT.NONE);
+		tableItem.setText(0, num);
+		tableItem.setText(1, content);
 
-
+	}
 
 	@Override
 	public void addPartPropertyListener(IPropertyChangeListener listener) {
@@ -244,10 +221,11 @@ public class RequirementsView extends ViewPart implements ISelectionListener{
 	@Override
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
 		ConsoleHandler.info("process detetct change\n");
-		if(selection!= null){
+		if (selection != null) {
 //			requireID.setText(selection.toString());
 		}
 	}
+
 	@Override
 	public void setFocus() {
 		return;

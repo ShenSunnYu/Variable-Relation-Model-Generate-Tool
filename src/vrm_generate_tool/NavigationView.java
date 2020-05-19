@@ -253,6 +253,10 @@ public class NavigationView extends ViewPart implements ISelectionListener{
         newItem.setText("新建");
         tree.setMenu(menu);
         
+        MenuItem openItem=new MenuItem(menu,SWT.PUSH);
+        openItem.setText("打开");
+        tree.setMenu(menu);
+        
         MenuItem deleteItem=new MenuItem(menu, SWT.PUSH);    
         deleteItem.setText("删除");
         tree.setMenu(menu);
@@ -268,15 +272,21 @@ public class NavigationView extends ViewPart implements ISelectionListener{
 			    	   @Override
 			    	   public void widgetSelected(SelectionEvent e) {
 			    		   createSubMenu(is.toString());
-							try {
-								PlatformUI.getWorkbench().
-								getActiveWorkbenchWindow().
-								getActivePage().
-								showView(RequirementsView.ID, "原始需求", IWorkbenchPage.VIEW_ACTIVATE);
-							} catch (PartInitException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
+			    		   openItem.addSelectionListener(new SelectionAdapter(){
+					    	   @Override
+					    	   public void widgetSelected(SelectionEvent e) {		    		   
+					    		   try {
+					    			   PlatformUI.getWorkbench().
+					    			   getActiveWorkbenchWindow().
+					    			   getActivePage().
+					    			   showView(RequirementsView.ID);
+					    			  // showView(RequirementsView.ID, "原始需求", IWorkbenchPage.VIEW_ACTIVATE);
+					    		   } catch (PartInitException e1) {
+					    			   // TODO Auto-generated catch block
+					    			   e1.printStackTrace();
+					    		   }
+					    	   }
+			    		   });
 						}
 					});
 				}
@@ -469,8 +479,6 @@ public class NavigationView extends ViewPart implements ISelectionListener{
 	//点击新建，创建子目录
 	protected void createSubMenu(String b) {
 		// TODO Auto-generated method stub
-		//Scanner scan = new Scanner(System.in);
-		//String input=scan.next();
 		
 		switch(b)
 		{
@@ -478,47 +486,47 @@ public class NavigationView extends ViewPart implements ISelectionListener{
 				TreeObject child1=new TreeObject("子节点");
 				require.addChild(child1);
 				break;
-			case "数据类型":
+			case "[数据类型]":
 				TreeObject child2=new TreeObject("");
 				dataType.addChild(child2);
 				break;
-			case "专有名词":
+			case "[专有名词]":
 				TreeObject child3=new TreeObject("");
 				properNoun.addChild(child3);
 				break;
-			case "常量":
+			case "[常量]":
 				TreeObject child4=new TreeObject("");
 				constNum.addChild(child4);
 				break;
-			case "输入变量":
+			case "[输入变量]":
 				TreeObject child5=new TreeObject("");
 				inputVariable.addChild(child5);
 				break;
-			case "输出变量":
+			case "[输出变量]":
 				TreeObject child6=new TreeObject("");
 				outputVariable.addChild(child6);
 				break;
-			case "中间变量":
+			case "[中间变量]":
 				TreeObject child7=new TreeObject("");
 				middleVariable.addChild(child7);
 				break;
-			case "模式类":
+			case "[模式类]":
 				TreeObject child8=new TreeObject("");
 				pattern.addChild(child8);
 				break;
-			case "通用条件":
+			case "[通用条件]":
 				TreeObject child9=new TreeObject("");
 				commonCondition.addChild(child9);
 				break;
-			case "通用事件":
+			case "[通用事件]":
 				TreeObject child10=new TreeObject("");
 				commonEvent.addChild(child10);
 				break;
-			case "显示条件":
+			case "[显示条件]":
 				TreeObject child11=new TreeObject("");
 				showCondition.addChild(child11);
 				break;
-			case "显示事件":
+			case "[显示事件]":
 				TreeObject child12=new TreeObject("");
 				showEvent.addChild(child12);
 				break;

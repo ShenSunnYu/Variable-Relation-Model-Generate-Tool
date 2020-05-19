@@ -1,10 +1,22 @@
 package vrm_generate_tool;
 
+import java.io.IOException;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.XMLWriter;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -14,10 +26,15 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.ViewPart;
 
+import java.io.File;
+import java.io.FileOutputStream;
+
+
+
 /** 
 * 
-* �������ͽ��� 
-* @author ������
+* 数据类型界面 
+* @author 沈翔宇
 *
 */
 public class DataTypeView extends ViewPart implements ISelectionListener{
@@ -27,16 +44,21 @@ public class DataTypeView extends ViewPart implements ISelectionListener{
 	/**
 	 * The text control that's displaying the content of the email message.
 	 */
-	private Label lab_name;//����
-	private Label lab_type;//����
-	private Label lab_range;//ֵ��
-	private Label lab_precision;//����
+	private Label lab_name;//名称
+	private Label lab_type;//类型
+	private Label lab_range;//值域
+	private Label lab_precision;//精度
 
 	
-	private Text  txt_name;//���������
-	private Combo co_type;//���������
-	private Text  txt_range;//ֵ�������
-	private Text  txt_precision;//���������
+	private Text  txt_name;//名称输入框
+	private Combo co_type;//类型输入框
+	private Text  txt_range;//值域输入框
+	private Text  txt_precision;//精度输入框
+	private static String  output_string1=null;
+	private static String  output_string2=null;
+	private static String  output_string3=null;
+	private static String  output_string4=null;
+	
 //	public static String requirementID = "R1.1";
 //	private Label requireID ;
 	@Override
@@ -60,13 +82,13 @@ public class DataTypeView extends ViewPart implements ISelectionListener{
 		Display display = Display.getDefault();
 		Font boldFont = JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT);    	
 		lab_name = new Label(top, SWT.NONE);
-    	lab_name.setText("����:");
+    	lab_name.setText("名称:");
     	lab_name.setFont(boldFont);
     	lab_name.setBounds(20, 40, 100, 60);
 		//l.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
 		
     	txt_name = new Text(top, SWT.BORDER);
-    	txt_name.setFont(new Font(display,"����",16,SWT.NORMAL));
+    	txt_name.setFont(new Font(display,"宋体",16,SWT.NORMAL));
 		txt_name.setBounds(120, 40, 500, 26);
 	   // text.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
 		
@@ -75,17 +97,17 @@ public class DataTypeView extends ViewPart implements ISelectionListener{
 //		requireID.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, true, false));
 		
 		lab_type = new Label(top, SWT.NONE);
-		lab_type.setText("����:");
+		lab_type.setText("类型:");
 		lab_type.setFont(boldFont);
 		lab_type.setBounds(20, 100, 100, 60);
 		
 /*		txt_type = new Text(top, SWT.BORDER);
-		txt_type.setFont(new Font(display,"����",16,SWT.NORMAL));
+		txt_type.setFont(new Font(display,"宋体",16,SWT.NORMAL));
 		txt_type.setBounds(120, 100, 500, 26);
 	*/	
 		
 		co_type = new Combo(top, SWT.NONE);
-		co_type.setFont(new Font(display,"����",12,SWT.NORMAL));
+		co_type.setFont(new Font(display,"宋体",12,SWT.NORMAL));
 		co_type.add("Char");
 		co_type.add("Boolean");
 		co_type.add("Enumerated");
@@ -98,25 +120,94 @@ public class DataTypeView extends ViewPart implements ISelectionListener{
 		co_type.setBounds(120, 100, 500, 60);
 		
 		lab_range = new Label(top, SWT.NONE);
-		lab_range.setText("ֵ��:");
+		lab_range.setText("值域:");
 		lab_range.setFont(boldFont);
 		lab_range.setBounds(20, 160, 100, 60);
 		
 		txt_range = new Text(top, SWT.BORDER);
-		txt_range.setFont(new Font(display,"����",16,SWT.NORMAL));
+		txt_range.setFont(new Font(display,"宋体",16,SWT.NORMAL));
 		txt_range.setBounds(120, 160, 500, 26);
 		
 		lab_precision = new Label(top, SWT.NONE);
-		lab_precision.setText("����:");
+		lab_precision.setText("精度:");
 		lab_precision.setFont(boldFont);
 		lab_precision.setBounds(20, 220, 100, 60);
 		
 		txt_precision = new Text(top, SWT.BORDER);
-		txt_precision.setFont(new Font(display,"����",16,SWT.NORMAL));
+		txt_precision.setFont(new Font(display,"宋体",16,SWT.NORMAL));
 		txt_precision.setBounds(120, 220, 500, 26);
 		
+		Button b1=new Button(top,SWT.PUSH);
+		b1.setBounds(70, 320, 100, 26);
+		b1.setText("确定");
+		b1.addSelectionListener(new SelectionAdapter() 
+		{
+			public void widgetSelected(SelectionEvent e) {
+				output_string1 = txt_name.getText();
+				output_string2 = co_type.getText();
+				output_string3 = txt_range.getText();
+				output_string4 = txt_precision.getText();		
+
+				// DocumentHelper提供了创建Document对象的方法
+				Document document = DocumentHelper.createDocument();
+				// 添加节点信息
+				Element rootElement = document.addElement("VRM");
+				// 这里可以继续添加子节点，也可以指定内容
+				rootElement.setText("这个是数据类型的文本信息");
+				Element element = rootElement.addElement("view name");
+				element.addAttribute("view name", "数据类型");
+
+				Element nameElement = element.addElement("name");
+				Element typeElement = element.addElement("type");
+				Element rangeElement = element.addElement("range");
+				Element precisionElement = element.addElement("precision");
+				nameElement.addAttribute("name",output_string1);//为节点添加属性值
+				typeElement.addAttribute("type", output_string2);
+				rangeElement.addAttribute("range", output_string3);
+				precisionElement.addAttribute("precision", output_string4);
+
+				// 设置XML文档格式
+				// OutputFormat outputFormat = OutputFormat.createPrettyPrint();//默认样式
+
+				// 自定义xml样式
+				OutputFormat outputFormat = new OutputFormat();
+				// 设置XML编码方式,即是用指定的编码方式保存XML文档到字符串(String),这里也可以指定为GBK或是ISO8859-1  
+				outputFormat.setEncoding("UTF-8");
+				// outputFormat.setSuppressDeclaration(true); //是否生产xml头
+				outputFormat.setIndent(true); // 设置是否缩进
+				outputFormat.setIndentSize(2); // 以2个空格方式实现缩进
+				outputFormat.setNewlines(true); // 设置是否换行，一个结点为一行
+				outputFormat.setTrimText(true); // 去重空格
+
+				try {
+					// Writer fileWriter = new
+					// FileWriter("C:\\Users\\10182\\Desktop\\dataType.xml");
+					File file = new File("C:\\Users\\10182\\Desktop\\dataType.xml");
+					// dom4j提供了专门写入文件的对象XMLWriter
+					XMLWriter xmlWriter = new XMLWriter(new FileOutputStream(file), outputFormat);
+					xmlWriter.write(document);
+					xmlWriter.flush();
+					xmlWriter.close();
+					ConsoleHandler.info("xml文档已保存至桌面！");
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
 		
-		
+		Button b2=new Button(top,SWT.PUSH);
+		b2.setBounds(230, 320, 100, 26);
+		b2.setText("取消");
+		b2.addMouseListener(new MouseAdapter()
+		{
+			public void mouseDown(MouseEvent e) {
+				txt_name.setText("");
+				co_type.setText("");
+				txt_range.setText("");
+				txt_precision.setText("");
+				ConsoleHandler.info("输入已成功删除！");
+			}
+		});
 //		l.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
 //    
 //		final Link link = new Link(top, SWT.NONE);

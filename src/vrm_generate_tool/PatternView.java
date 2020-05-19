@@ -1,10 +1,23 @@
 package vrm_generate_tool;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.XMLWriter;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
@@ -21,8 +34,8 @@ import org.eclipse.ui.part.ViewPart;
 
 /** 
 * 
-* Ä£Ê½Àà½çÃæ
-* @author ÉòÏèÓî 
+* æ¨¡å¼ç±»ç•Œé¢
+* @author æ²ˆç¿”å®‡ 
 *
 */
 public class PatternView extends ViewPart implements ISelectionListener{
@@ -32,15 +45,16 @@ public class PatternView extends ViewPart implements ISelectionListener{
 	/**
 	 * The text control that's displaying the content of the email message.
 	 */
-	private Label lab_name;//Ãû³Æ
-	private Label lab_describe;//ÃèÊö
+	private Label lab_name;//åç§°
+	private Label lab_describe;//æè¿°
 
-	private Text  txt_name;//Ãû³ÆÊäÈë¿ò
-	private Text  txt_describe;//ÃèÊöÊäÈë¿ò
+	private Text  txt_name;//åç§°è¾“å…¥æ¡†
+	private Text  txt_describe;//æè¿°è¾“å…¥æ¡†
 
 	private Table table;
 
-//	protected Shell shell;
+	private static String  output_string1=null;
+	private static String  output_string2=null;
 //	public static String requirementID = "R1.1";
 //	private Label requireID ;
 	@Override
@@ -65,40 +79,24 @@ public class PatternView extends ViewPart implements ISelectionListener{
 		Display display = Display.getDefault();
  		Font boldFont = JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT);    	
 	    lab_name = new Label(top, SWT.NONE);
-	    lab_name.setText("Ãû³Æ:");
+	    lab_name.setText("åç§°:");
 	    lab_name.setFont(boldFont);
 	    lab_name.setBounds(20, 40, 100, 60);
 	    	
 	    txt_name = new Text(top, SWT.BORDER);
-	    txt_name.setFont(new Font(display,"ËÎÌå",16,SWT.NORMAL));
+	    txt_name.setFont(new Font(display,"å®‹ä½“",16,SWT.NORMAL));
 	    txt_name.setBounds(120, 40, 500, 26);
 	    		
 	    lab_describe = new Label(top, SWT.NONE);
-	    lab_describe.setText("ÃèÊö:");
+	    lab_describe.setText("æè¿°:");
 	    lab_describe.setFont(boldFont);
 	    lab_describe.setBounds(20, 100, 100, 60);
 	    		
 	    txt_describe = new Text(top, SWT.BORDER);
-	    txt_describe.setFont(new Font(display,"ËÎÌå",16,SWT.NORMAL));
+	    txt_describe.setFont(new Font(display,"å®‹ä½“",16,SWT.NORMAL));
 	    txt_describe.setBounds(120, 100, 500, 26);
-
-				
-		//shell=new Shell();
-	
-		//shell.setSize(350,100);
-		//shell.setLayout(new FillLayout(SWT.VERTICAL));
-		
-		//Composite composite = new Composite(shell, SWT.H_SCROLL|SWT.V_SCROLL);
-		//composite.setLayout(new FillLayout(SWT.HORIZONTAL));
-	    /*
-	    ViewForm viewForm=new ViewForm(parent,SWT.NONE);
-		viewForm.setTopCenterSeparate(true);
-	    GridLayout gridLayout = new GridLayout();
-		top = new Composite(viewForm, SWT.NONE);
-		top.setLayout(gridLayout);
-		*/
-	    
-	    // ±í¸ñ²¼¾Ö
+    
+	    // è¡¨æ ¼å¸ƒå±€
 	 	GridData gridDate = new GridData();
 	 	gridDate.horizontalAlignment = SWT.FILL;
 	 	gridDate.grabExcessHorizontalSpace = true ;
@@ -106,13 +104,13 @@ public class PatternView extends ViewPart implements ISelectionListener{
 	 	gridDate.verticalAlignment = SWT.FILL;
 	 				
 		//CheckboxTableViewer checkboxTableViewer = CheckboxTableViewer.newCheckList(top, SWT.BORDER | SWT.FULL_SELECTION);
-		//table = checkboxTableViewer.getTable();//»ñÈ¡±í¸ñ
+		//table = checkboxTableViewer.getTable();//è·å–è¡¨æ ¼
 	 	table = new Table(top,SWT.BORDER | SWT.MULTI);
 		table.setBounds(20, 160, 1200, 600);
 		
-		table.setHeaderVisible(true);//±í¸ñÍ·²¿ÏÔÊ¾
-		table.setLinesVisible(true);//ÉèÖÃ±í¸ñÏß
-		table.setLayoutData(gridDate);//ÉèÖÃ±í¸ñ²¼¾Ö
+		table.setHeaderVisible(true);//è¡¨æ ¼å¤´éƒ¨æ˜¾ç¤º
+		table.setLinesVisible(true);//è®¾ç½®è¡¨æ ¼çº¿
+		table.setLayoutData(gridDate);//è®¾ç½®è¡¨æ ¼å¸ƒå±€
 		
 		 for (int i = 0; i < 6; i++) {
 		      TableColumn column = new TableColumn(table, SWT.NONE);
@@ -122,8 +120,8 @@ public class PatternView extends ViewPart implements ISelectionListener{
 		      new TableItem(table, SWT.NONE);
 		  }
 		    
-		// ´´½¨±íÍ·µÄ×Ö·û´®Êı×é  
-        //String[] tableHeader = {"Ãû³Æ", "Isintital", "Isfinal", "Numberical Value","Source","ÃèÊö"};
+		// åˆ›å»ºè¡¨å¤´çš„å­—ç¬¦ä¸²æ•°ç»„  
+        //String[] tableHeader = {"åç§°", "Isintital", "Isfinal", "Numberical Value","Source","æè¿°"};
         //TableItem item = new TableItem(table, SWT.NONE); 
         /*for(int i=0;i<tableHeader.length;i++)
 		{
@@ -139,7 +137,7 @@ public class PatternView extends ViewPart implements ISelectionListener{
         		Text text = new Text(table, SWT.CENTER);
         	if(i==0 && j==0)
         	{
-        		text.setText("Ãû³Æ");
+        		text.setText("åç§°");
             	editor.grabHorizontal = true;
             	editor.setEditor(text, items[i], j);
         	}else if(i==0 && j==1)
@@ -164,7 +162,7 @@ public class PatternView extends ViewPart implements ISelectionListener{
             	editor.setEditor(text, items[i], j);
         	}else if(i==0 && j==5)
         	{
-            	text.setText("ÃèÊö");
+            	text.setText("æè¿°");
             	editor.grabHorizontal = true;
             	editor.setEditor(text, items[i], j);
         	}
@@ -187,32 +185,70 @@ public class PatternView extends ViewPart implements ISelectionListener{
         }
     }
         
-       //viewForm.setContent(top);
-       /* 
-        for (int i = 0; i < tableHeader.length; i++)  
-        {  
-            TableColumn tableColumn = new TableColumn(table, SWT.NONE);  
-            tableColumn.setText(tableHeader[i]);  
-            // ÉèÖÃ±íÍ·¿ÉÒÆ¶¯£¬Ä¬ÈÏÎªfalse  
-            tableColumn.setMoveable(true);  
-        }  
-        
-        // ÖØĞÂ²¼¾Ö±í¸ñ  
-        for (int i = 0; i < tableHeader.length; i++)  
-        {  
-            table.getColumn(i).pack();  
-        }
-        */
-       //parent.pack();
-	   // shell.layout();
-       /*
-		while (!parent.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
+        Button b1=new Button(top,SWT.PUSH);
+		b1.setBounds(70, 830, 100, 26);
+		b1.setText("ç¡®å®š");
+		b1.addSelectionListener(new SelectionAdapter() 
+		{
+			public void widgetSelected(SelectionEvent e) {
+				output_string1 = txt_name.getText();		
+				output_string2 = txt_describe.getText();
+				
+				// DocumentHelperæä¾›äº†åˆ›å»ºDocumentå¯¹è±¡çš„æ–¹æ³•
+				Document document = DocumentHelper.createDocument();
+				// æ·»åŠ èŠ‚ç‚¹ä¿¡æ¯
+				Element rootElement = document.addElement("VRM");
+				// è¿™é‡Œå¯ä»¥ç»§ç»­æ·»åŠ å­èŠ‚ç‚¹ï¼Œä¹Ÿå¯ä»¥æŒ‡å®šå†…å®¹
+				rootElement.setText("è¿™ä¸ªæ˜¯æ¨¡å¼ç±»çš„æ–‡æœ¬ä¿¡æ¯");
+				Element element = rootElement.addElement("view name");
+				element.addAttribute("view name", "æ¨¡å¼ç±»");
+
+				Element nameElement = element.addElement("name");
+				Element describeElement = element.addElement("describe");
+				nameElement.addAttribute("name",output_string1);//ä¸ºèŠ‚ç‚¹æ·»åŠ å±æ€§å€¼
+				describeElement.addAttribute("describe", output_string2);
+				// è®¾ç½®XMLæ–‡æ¡£æ ¼å¼
+				// OutputFormat outputFormat = OutputFormat.createPrettyPrint();//é»˜è®¤æ ·å¼
+
+				// è‡ªå®šä¹‰xmlæ ·å¼
+				OutputFormat outputFormat = new OutputFormat();
+				// è®¾ç½®XMLç¼–ç æ–¹å¼,å³æ˜¯ç”¨æŒ‡å®šçš„ç¼–ç æ–¹å¼ä¿å­˜XMLæ–‡æ¡£åˆ°å­—ç¬¦ä¸²(String),è¿™é‡Œä¹Ÿå¯ä»¥æŒ‡å®šä¸ºGBKæˆ–æ˜¯ISO8859-1 Â 
+				outputFormat.setEncoding("UTF-8");
+				// outputFormat.setSuppressDeclaration(true); //æ˜¯å¦ç”Ÿäº§xmlå¤´
+				outputFormat.setIndent(true); // è®¾ç½®æ˜¯å¦ç¼©è¿›
+				outputFormat.setIndentSize(2); // ä»¥2ä¸ªç©ºæ ¼æ–¹å¼å®ç°ç¼©è¿›
+				outputFormat.setNewlines(true); // è®¾ç½®æ˜¯å¦æ¢è¡Œï¼Œä¸€ä¸ªç»“ç‚¹ä¸ºä¸€è¡Œ
+				outputFormat.setTrimText(true); // å»é‡ç©ºæ ¼
+
+				try {
+					// Writer fileWriter = new
+					// FileWriter("C:\\Users\\10182\\Desktop\\dataType.xml");
+					File file = new File("C:\\Users\\10182\\Desktop\\pattern.xml");
+					// dom4jæä¾›äº†ä¸“é—¨å†™å…¥æ–‡ä»¶çš„å¯¹è±¡XMLWriter
+					XMLWriter xmlWriter = new XMLWriter(new FileOutputStream(file), outputFormat);
+					xmlWriter.write(document);
+					xmlWriter.flush();
+					xmlWriter.close();
+					ConsoleHandler.info("xmlæ–‡æ¡£å·²ä¿å­˜è‡³æ¡Œé¢ï¼");
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
 			}
-			display.dispose();
-		}
-		*/
+		});
+		
+		
+		Button b2=new Button(top,SWT.PUSH);
+		b2.setBounds(230, 830, 100, 26);
+		b2.setText("å–æ¶ˆ");
+		b2.addMouseListener(new MouseAdapter()
+		{
+			public void mouseDown(MouseEvent e) {
+				txt_name.setText("");
+				txt_describe.setText("");
+				ConsoleHandler.info("è¾“å…¥å·²æˆåŠŸåˆ é™¤ï¼");
+			}
+		});
+		
 	    /*
 		
 		  	TabFolder tabFolder = new TabFolder(shell,SWT.BORDER);
@@ -234,23 +270,23 @@ public class PatternView extends ViewPart implements ISelectionListener{
 	        {
 	        	Font boldFont = JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT);    	
 	        	lab_name = new Label(top, SWT.NONE);
-	        	lab_name.setText("Ãû³Æ:");
+	        	lab_name.setText("åç§°:");
 	        	lab_name.setFont(boldFont);
 	        	lab_name.setBounds(20, 40, 100, 60);
 	    		//l.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
 	    		
 	        	txt_name = new Text(top, SWT.BORDER);
-	        	txt_name.setFont(new Font(display,"ËÎÌå",16,SWT.NORMAL));
+	        	txt_name.setFont(new Font(display,"å®‹ä½“",16,SWT.NORMAL));
 	    		txt_name.setBounds(120, 40, 500, 26);
 	    		
 	    		
 	    		lab_describe = new Label(top, SWT.NONE);
-	    		lab_describe.setText("ÃèÊö:");
+	    		lab_describe.setText("æè¿°:");
 	    		lab_describe.setFont(boldFont);
 	    		lab_describe.setBounds(20, 100, 100, 60);
 	    		
 	    		txt_describe = new Text(top, SWT.BORDER|SWT.WRAP|SWT.V_SCROLL|SWT.MULTI);
-	    		txt_describe.setFont(new Font(display,"ËÎÌå",16,SWT.NORMAL));
+	    		txt_describe.setFont(new Font(display,"å®‹ä½“",16,SWT.NORMAL));
 	    		txt_describe.setBounds(120, 100, 500, 26);
 
 	        }
@@ -259,14 +295,14 @@ public class PatternView extends ViewPart implements ISelectionListener{
 	        gd.heightHint = 20;
 	        tableGroup.setLayoutData(gd);
 	        tableGroup.setLayout(new GridLayout(1,false));
-	        {    //´´½¨Ò»¸öµ¥Ñ¡µÄ£¬ÓĞ±ß½çµÄ£¬Ò»ĞĞÈ«Ñ¡µÄ±í¸ñ
+	        {    //åˆ›å»ºä¸€ä¸ªå•é€‰çš„ï¼Œæœ‰è¾¹ç•Œçš„ï¼Œä¸€è¡Œå…¨é€‰çš„è¡¨æ ¼
 	            table = new Table(tableGroup,SWT.SINGLE | SWT.BORDER | SWT.FULL_SELECTION);
-	            table.setHeaderVisible(true);//ÉèÖÃ±íÍ·¿É¼û
-	            table.setLinesVisible(true);//ÉèÖÃÏßÌõ¿É¼û
+	            table.setHeaderVisible(true);//è®¾ç½®è¡¨å¤´å¯è§
+	            table.setLinesVisible(true);//è®¾ç½®çº¿æ¡å¯è§
 	            table.setLayoutData(new GridData(GridData.FILL_BOTH));
 	            
 	            TableColumn column1 = new TableColumn(table,SWT.NULL);
-	            column1.setText("Ãû³Æ");
+	            column1.setText("åç§°");
 	            column1.pack();
 	            column1.setWidth(150);
 	            
@@ -291,7 +327,7 @@ public class PatternView extends ViewPart implements ISelectionListener{
 	            column5.setWidth(150);  
 	            
 	            TableColumn column6 = new TableColumn(table,SWT.NULL);
-	            column6.setText("ÃèÊö");
+	            column6.setText("æè¿°");
 	            column6.pack();
 	            column6.setWidth(150);  
 	        }

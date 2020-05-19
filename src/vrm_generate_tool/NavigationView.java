@@ -483,51 +483,51 @@ public class NavigationView extends ViewPart implements ISelectionListener{
 		switch(b)
 		{
 			case "[原始需求]":
-				TreeObject child1=new TreeObject("子节点");
+				TreeObject child1=new TreeObject("子节点1");
 				require.addChild(child1);
 				break;
 			case "[数据类型]":
-				TreeObject child2=new TreeObject("");
+				TreeObject child2=new TreeObject("子节点1");
 				dataType.addChild(child2);
 				break;
 			case "[专有名词]":
-				TreeObject child3=new TreeObject("");
+				TreeObject child3=new TreeObject("子节点1");
 				properNoun.addChild(child3);
 				break;
 			case "[常量]":
-				TreeObject child4=new TreeObject("");
+				TreeObject child4=new TreeObject("子节点1");
 				constNum.addChild(child4);
 				break;
 			case "[输入变量]":
-				TreeObject child5=new TreeObject("");
+				TreeObject child5=new TreeObject("子节点1");
 				inputVariable.addChild(child5);
 				break;
 			case "[输出变量]":
-				TreeObject child6=new TreeObject("");
+				TreeObject child6=new TreeObject("子节点1");
 				outputVariable.addChild(child6);
 				break;
 			case "[中间变量]":
-				TreeObject child7=new TreeObject("");
+				TreeObject child7=new TreeObject("子节点1");
 				middleVariable.addChild(child7);
 				break;
 			case "[模式类]":
-				TreeObject child8=new TreeObject("");
+				TreeObject child8=new TreeObject("子节点1");
 				pattern.addChild(child8);
 				break;
 			case "[通用条件]":
-				TreeObject child9=new TreeObject("");
+				TreeObject child9=new TreeObject("子节点1");
 				commonCondition.addChild(child9);
 				break;
 			case "[通用事件]":
-				TreeObject child10=new TreeObject("");
+				TreeObject child10=new TreeObject("子节点1");
 				commonEvent.addChild(child10);
 				break;
 			case "[显示条件]":
-				TreeObject child11=new TreeObject("");
+				TreeObject child11=new TreeObject("子节点1");
 				showCondition.addChild(child11);
 				break;
 			case "[显示事件]":
-				TreeObject child12=new TreeObject("");
+				TreeObject child12=new TreeObject("子节点1");
 				showEvent.addChild(child12);
 				break;
 			

@@ -52,10 +52,8 @@ public class RequirementsView extends ViewPart implements ISelectionListener {
 	 * The text control that's displaying the content of the email message.
 	 */
 	private Label lab_id;// 需求ID
-	// private Label lab_title;//标题
 	private Label lab_content;
 	private Text txt_id;// 需求输入框
-	// private Text txt_title;//标题输入框
 	private Text txt_content;// 内容输入框
 	private List rightList;
 	private Table tab;
@@ -65,27 +63,7 @@ public class RequirementsView extends ViewPart implements ISelectionListener {
 	@Override
 	public void createPartControl(Composite parent) {
 		Composite top = new Composite(parent, SWT.NONE);
-		// GridLayout layout = new GridLayout();
-		// layout.numColumns=8;
-		// layout.horizontalSpacing=10;
-		// top.setLayout(layout);
-
-		// new Label(top,SWT.NONE).setText("需求ID:");
-		// Text text1=new Text(top, SWT.SINGLE | SWT.BORDER);
-		// GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
-		// gridData.horizontalSpan = 3;
-		// text1.setLayoutData(gridData);
-
-		// List categories = new List(top, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
-		// categories.setItems(new String [] {"Best of Breed", "Prettiest Female",
-		// "Handsomest Male","Best Dressed", "Fluffiest Ears", "Most Colors", "Best
-		// Performer", "Loudest Bark", "Best Behaved","Prettiest Eyes", "Most Hair",
-		// "Longest Tail","Cutest Trick"});
-		// gridData = new GridData(GridData.FILL_HORIZONTAL,GridData.FILL_VERTICAL);
-		// gridData.horizontalSpan = 4;
-		// gridData.verticalSpan = 3;
-		// categories.setLayoutData(gridData);
-
+		
 		Display display = Display.getDefault();
 		Font boldFont = JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT);
 		lab_id = new Label(top, SWT.NONE);

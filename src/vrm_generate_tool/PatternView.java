@@ -14,6 +14,8 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -116,25 +118,15 @@ public class PatternView extends ViewPart implements ISelectionListener{
 		      TableColumn column = new TableColumn(table, SWT.NONE);
 		      column.setWidth(200);
 		    }
-		 for (int i = 0; i < 12; i++) {
-		      new TableItem(table, SWT.NONE);
-		  }
-		    
-		// 创建表头的字符串数组  
-        //String[] tableHeader = {"名称", "Isintital", "Isfinal", "Numberical Value","Source","描述"};
-        //TableItem item = new TableItem(table, SWT.NONE); 
-        /*for(int i=0;i<tableHeader.length;i++)
-		{
-			TableColumn tableColumn = new TableColumn(table, SWT.CENTER);
-			tableColumn.setText(tableHeader[i]);
-			tableColumn.setMoveable(true);
-		}*/
+	
+		
         TableItem[] items = table.getItems();
+        final TableEditor editor = new TableEditor(table);
+		Text text = new Text(table, SWT.CENTER);
         for (int i = 0; i < items.length; i++) {
         	for(int j=0;j<6;j++)
         	{
-        		TableEditor editor = new TableEditor(table);
-        		Text text = new Text(table, SWT.CENTER);
+        		
         	if(i==0 && j==0)
         	{
         		text.setText("名称");
@@ -166,24 +158,51 @@ public class PatternView extends ViewPart implements ISelectionListener{
             	editor.grabHorizontal = true;
             	editor.setEditor(text, items[i], j);
         	}
-            editor = new TableEditor(table);
-        	Button button = new Button(table, SWT.CHECK);
-        	button.pack();
-        	editor.minimumWidth = button.getSize().x;
-        	editor.grabHorizontal = true;
-        	editor.horizontalAlignment = SWT.CENTER;
-        	if(i==1 && j==1)
-        	{
-        		editor.setEditor(button, items[i], j);		
-        	}else if(i==1 && j==2) {
-        		editor.setEditor(button, items[i], j);
-        	}
-        	else
-        	{
-        		editor.setEditor(text, items[i], j);;
+        	TableEditor editor1 = new TableEditor(table);
+        		Button button = new Button(table, SWT.CHECK);
+	        	button.pack();
+	        	editor1.minimumWidth = button.getSize().x;
+        		editor1.grabHorizontal = true;
+        		editor1.horizontalAlignment = SWT.CENTER;
+        	
+        		if(i==1 && j==1)
+        		{
+        			editor1.setEditor(button, items[i], j);		
+        		}else if(i==1 && j==2) {
+        			editor1.setEditor(button, items[i], j);
+        		}
+        		else
+        		{	
+        			editor.setEditor(text, items[i], j);;
+        		}
+        		
+        		if(j==0) {
+        			if(i == items.length-1) {
+        				text.addKeyListener(new KeyAdapter(){
+        					public void keyPressed(KeyEvent e) {   
+        						for (int i =  items.length; i < items.length+1; i++) {
+        				        	for(int j=0;j<6;j++)
+        				        	{
+        				        		if(j==1)
+        				        		{
+        				        			editor1.setEditor(button, items[items.length], 1);		
+        				        		}else if(j==2) {
+        				        			editor1.setEditor(button, items[items.length], 2);
+        				        		}
+        				        		else
+        				        		{	
+        				        			editor.setEditor(text, items[items.length], j);;
+        								}
+        				        	}
+        						}
+        				}
+        			});
+        		}
+        		
         	}
         }
-    }
+        }
+        
         
         Button b1=new Button(top,SWT.PUSH);
 		b1.setBounds(70, 830, 100, 26);
@@ -249,100 +268,7 @@ public class PatternView extends ViewPart implements ISelectionListener{
 			}
 		});
 		
-	    /*
 		
-		  	TabFolder tabFolder = new TabFolder(shell,SWT.BORDER);
-	        
-	        TabItem tabItem1 = new TabItem(tabFolder,SWT.NONE);
-	      
-	        
-	        Composite compsoite1 = new Composite(tabFolder,SWT.NONE);
-	        tabItem1.setControl(compsoite1);
-	        
-	        GridLayout layout = new GridLayout();
-	        layout.numColumns = 1;
-	        compsoite1.setLayout(layout);
-	        Group treeGroup = new Group(compsoite1,SWT.NONE);
-	        GridData griddata = new GridData(GridData.FILL_BOTH);
-	        griddata.heightHint = 50;
-	        treeGroup.setLayoutData(griddata);
-	        treeGroup.setLayout(new GridLayout(1,false));
-	        {
-	        	Font boldFont = JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT);    	
-	        	lab_name = new Label(top, SWT.NONE);
-	        	lab_name.setText("名称:");
-	        	lab_name.setFont(boldFont);
-	        	lab_name.setBounds(20, 40, 100, 60);
-	    		//l.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
-	    		
-	        	txt_name = new Text(top, SWT.BORDER);
-	        	txt_name.setFont(new Font(display,"宋体",16,SWT.NORMAL));
-	    		txt_name.setBounds(120, 40, 500, 26);
-	    		
-	    		
-	    		lab_describe = new Label(top, SWT.NONE);
-	    		lab_describe.setText("描述:");
-	    		lab_describe.setFont(boldFont);
-	    		lab_describe.setBounds(20, 100, 100, 60);
-	    		
-	    		txt_describe = new Text(top, SWT.BORDER|SWT.WRAP|SWT.V_SCROLL|SWT.MULTI);
-	    		txt_describe.setFont(new Font(display,"宋体",16,SWT.NORMAL));
-	    		txt_describe.setBounds(120, 100, 500, 26);
-
-	        }
-	        Group tableGroup = new Group(compsoite1,SWT.NONE);
-	        GridData gd = new GridData(GridData.FILL_BOTH);
-	        gd.heightHint = 20;
-	        tableGroup.setLayoutData(gd);
-	        tableGroup.setLayout(new GridLayout(1,false));
-	        {    //创建一个单选的，有边界的，一行全选的表格
-	            table = new Table(tableGroup,SWT.SINGLE | SWT.BORDER | SWT.FULL_SELECTION);
-	            table.setHeaderVisible(true);//设置表头可见
-	            table.setLinesVisible(true);//设置线条可见
-	            table.setLayoutData(new GridData(GridData.FILL_BOTH));
-	            
-	            TableColumn column1 = new TableColumn(table,SWT.NULL);
-	            column1.setText("名称");
-	            column1.pack();
-	            column1.setWidth(150);
-	            
-	            TableColumn column2 = new TableColumn(table,SWT.NULL);
-	            column2.setText("Isintital");
-	            column2.pack();
-	            column2.setWidth(150);   
-	            
-	            TableColumn column3 = new TableColumn(table,SWT.NULL);
-	            column3.setText("Isfinal");
-	            column3.pack();
-	            column3.setWidth(150);  
-	            
-	            TableColumn column4 = new TableColumn(table,SWT.NULL);
-	            column4.setText("Numberical Value");
-	            column4.pack();
-	            column4.setWidth(150);  
-	            
-	            TableColumn column5 = new TableColumn(table,SWT.NULL);
-	            column5.setText("Source");
-	            column5.pack();
-	            column5.setWidth(150);  
-	            
-	            TableColumn column6 = new TableColumn(table,SWT.NULL);
-	            column6.setText("描述");
-	            column6.pack();
-	            column6.setWidth(150);  
-	        }
-	        shell.open();
-	        
-	        while(!shell.isDisposed()){
-	            if(!display.readAndDispatch())
-	                display.sleep();
-	        }
-	        //dispose the resource
-	        display.beep();
-	        display.dispose();
-
-*/		
-//		
 		getSite().getPage().addSelectionListener((ISelectionListener) this);
 	
 	}

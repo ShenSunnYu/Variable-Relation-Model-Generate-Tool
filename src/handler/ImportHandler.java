@@ -59,10 +59,15 @@ public class ImportHandler extends AbstractHandler {
 	            // String district = row.getCell(3).getStringCellValue();
 	            // String postcode = row.getCell(4).getStringCellValue();
 	             
-	             ConsoleHandler.info("文件读取成功！");    
+	             ConsoleHandler.info("文件内容读取成功！");    
 	             ((RequirementsView)PlatformUI.getWorkbench().
 						   getActiveWorkbenchWindow().
 						   getActivePage().findView(RequirementsView.ID)).fileContent(reqNum+"",content);
+	             
+	             ConsoleHandler.info("文件编号读取成功！");    
+	             ((RequirementsView)PlatformUI.getWorkbench().
+						   getActiveWorkbenchWindow().
+						   getActivePage().findView(RequirementsView.ID)).rightFileContent("REQ"+reqNum+"");
 				  
 				 }
 				  //5、关闭流

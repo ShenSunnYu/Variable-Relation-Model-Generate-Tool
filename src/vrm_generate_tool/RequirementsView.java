@@ -51,54 +51,42 @@ public class RequirementsView extends ViewPart implements ISelectionListener {
 	/**
 	 * The text control that's displaying the content of the email message.
 	 */
-	private Label lab_id;// 需求ID
-	private Label lab_content;
-	private Text txt_id;// 需求输入框
-	private Text txt_content;// 内容输入框
-	private List rightList;
-	private Table tab;
-
+	
+	private Table tab1;
+	private Table tab2;
 //	public static String requirementID = "R1.1";
 //	private Label requireID ;
 	@Override
 	public void createPartControl(Composite parent) {
 		Composite top = new Composite(parent, SWT.NONE);
 		
-		Display display = Display.getDefault();
-		Font boldFont = JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT);
-		lab_id = new Label(top, SWT.NONE);
-		lab_id.setText("需求ID:");
-		lab_id.setFont(boldFont);
-		lab_id.setBounds(10, 40, 80, 60);
-
-		txt_id = new Text(top, SWT.BORDER|SWT.READ_ONLY);
-		txt_id.setFont(new Font(display, "宋体", 16, SWT.NORMAL));
-		txt_id.setBounds(90, 40, 300, 26);
-
-		lab_content = new Label(top, SWT.NONE);
-		lab_content.setText("内容:");
-		lab_content.setFont(boldFont);
-		lab_content.setBounds(10, 110, 80, 60);
-
-		txt_content = new Text(top, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI|SWT.READ_ONLY);
-		txt_content.setFont(new Font(display, "宋体", 16, SWT.NORMAL));
-		txt_content.setBounds(90, 110, 300, 350);
+		//Display display = Display.getDefault();
+		//Font boldFont = JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT);
+		// 创建左侧列表框
+		tab1 = new Table(top, SWT.MULTI | SWT.V_SCROLL | SWT.BORDER | SWT.WRAP|SWT.READ_ONLY);
+		// 为右侧列表框设置位置和大小
+		TableColumn numColumn = new TableColumn(tab1, SWT.NONE);
+		numColumn.setText("编号(num)");
+		TableColumn contentColumn = new TableColumn(tab1, SWT.NONE);
+		contentColumn.setText("内容(content)");
+		tab1.setBounds(40, 40, 800, 480);
+		numColumn.setWidth(100);
+		contentColumn.setWidth(700);
+		tab1.setLinesVisible(true);
+		tab1.setHeaderVisible(true);
 
 		// 创建右侧列表框
-		tab = new Table(top, SWT.MULTI | SWT.V_SCROLL | SWT.BORDER | SWT.WRAP|SWT.READ_ONLY);
+		tab2 = new Table(top, SWT.MULTI | SWT.V_SCROLL | SWT.BORDER | SWT.WRAP|SWT.READ_ONLY);
 		// 为右侧列表框填充字符串
 		// String[] rightItems=new String[0];
 		// tab.setItems(rightItems);
 		// 为右侧列表框设置位置和大小
-		TableColumn numColumn = new TableColumn(tab, SWT.NONE);
-		numColumn.setText("编号(num)");
-		TableColumn contentColumn = new TableColumn(tab, SWT.NONE);
-		contentColumn.setText("内容(content)");
-		tab.setBounds(480, 40, 800, 420);
-		numColumn.setWidth(100);
-		contentColumn.setWidth(700);
-		tab.setLinesVisible(true);
-		tab.setHeaderVisible(true);
+		TableColumn numColumn1 = new TableColumn(tab2, SWT.NONE);
+		numColumn1.setText("编号(num)");
+		tab2.setBounds(900, 40, 120, 480);
+		numColumn1.setWidth(120);
+		tab2.setLinesVisible(true);
+		tab2.setHeaderVisible(true);
 		
 		// rightList.add(fileContent());
 
@@ -184,10 +172,16 @@ public class RequirementsView extends ViewPart implements ISelectionListener {
 
 	public void fileContent(String num, String content) {
 
-		TableItem tableItem = new TableItem(tab, SWT.NONE);
+		TableItem tableItem = new TableItem(tab1, SWT.NONE);
 		tableItem.setText(0, num);
 		tableItem.setText(1, content);
 
+	}
+	
+	public void rightFileContent(String num) {
+
+		TableItem tableItem = new TableItem(tab2, SWT.NONE);
+		tableItem.setText(0, num);
 	}
 
 	@Override

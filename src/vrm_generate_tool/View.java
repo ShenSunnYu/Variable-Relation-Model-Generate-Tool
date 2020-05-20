@@ -22,9 +22,6 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
-import org.eclipse.nebula.widgets.grid.*;
-
-
 /**
  * 
  * @author ÍôÎÄÐù
@@ -40,7 +37,6 @@ public class View extends ViewPart implements ISelectionListener{
 	 * The text control that's displaying the content of the email message.
 	 */
 	private Label requireID ;
-	private Grid grid;
 	@Override
 	public void createPartControl(Composite parent) {
 

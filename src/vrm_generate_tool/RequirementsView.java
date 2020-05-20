@@ -35,7 +35,6 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.ViewPart;
 import org.omg.CORBA.PUBLIC_MEMBER;
-import org.eclipse.nebula.widgets.grid.*;
 
 /**
  * 

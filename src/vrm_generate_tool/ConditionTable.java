@@ -3,6 +3,9 @@ package vrm_generate_tool;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import org.eclipse.nebula.widgets.grid.Grid;
+import org.eclipse.nebula.widgets.grid.GridColumn;
+import org.eclipse.nebula.widgets.grid.GridColumnGroup;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.KeyAdapter;
@@ -23,6 +26,8 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
+import com.sun.xml.bind.v2.model.core.ID;
+
 /**
  * @PackageName:vrm_generate_tool
  * @ClassName:Condition_Event_Table
@@ -42,12 +47,21 @@ public class ConditionTable {
 	private static Button btn_del_col;
 	private static Button btn_sub;
 	private static Button btn_cancel;
+	
 	private static Table table;
 	private static Button btn_check;
 	private static TableEditor editor;
 	private static TableItem item;
 	private static TableColumn tableColumn;
+	
 	private static int i = 0;
+	private static Grid grid;
+	private static GridColumnGroup conditionColumnGroup;
+	private static GridColumn idColumn;
+	private static GridColumn gc1;
+	private static GridColumn gc2;
+	private static GridColumn gc3;
+	
 	public static void init(Shell shell) {
 		i = 0;
         gl = new GridLayout(6,false);
@@ -60,17 +74,48 @@ public class ConditionTable {
 		shell.setLayout(gl);
         shell.setSize(750, 400);
 
-		table = new Table(shell,SWT.MULTI|SWT.V_SCROLL|SWT.H_SCROLL|SWT.BORDER);
-		table.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,6,1));
-		table.setHeaderVisible(true);//设置表格头可见
-		table.setLinesVisible(true);//设置表格线可见
-		
 		comp1 = new Composite(shell, SWT.LEFT_TO_RIGHT);
 		comp1.setLayoutData(new GridData(SWT.FILL,SWT.FILL,false,false,4,1));
 		comp1.setLayout(gl);
 		comp2 = new Composite(shell, SWT.RIGHT_TO_LEFT);
 		comp2.setLayoutData(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		comp2.setLayout(gl);
+        
+//		System.out.println("GRID before");
+//        grid = new Grid(shell,SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+//        grid.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,6,1));
+//		grid.setHeaderVisible(true);
+//		grid.setLinesVisible(true);
+//		grid.setAutoHeight(true);
+//		grid.setAutoWidth(true);
+//		System.out.println("GRID after");
+//		idColumn = new GridColumn(grid, SWT.None);
+//		idColumn.setText("ID");
+//		idColumn.setWidth(200);
+//		
+//		
+//		conditionColumnGroup = new GridColumnGroup(grid, SWT.None);
+//		conditionColumnGroup.setText("条件");
+//		
+//		gc1 = new GridColumn(conditionColumnGroup, SWT.NONE);
+//		gc1.setText("变量");
+//		gc1.setWidth(100);
+//		
+//		gc2 = new GridColumn(conditionColumnGroup, SWT.NONE);
+//		gc2.setText("逻辑");
+//		gc2.setWidth(100);
+//		
+//		gc3 = new GridColumn(conditionColumnGroup, SWT.NONE);
+//		gc3.setText("值");
+//		gc3.setWidth(100);
+//		
+		
+        table = new Table(shell,SWT.MULTI|SWT.V_SCROLL|SWT.H_SCROLL|SWT.BORDER);
+		table.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,6,1));
+		table.setHeaderVisible(true);//设置表格头可见
+		table.setLinesVisible(true);//设置表格线可见
+		
+
 		
 		btn_add = new Button(comp1,SWT.NONE);
 		btn_add.setLayoutData(new GridData(SWT.NONE,SWT.NONE,false,false,1,1));
@@ -92,6 +137,7 @@ public class ConditionTable {
 	public static void getConditionTable(Display display) {
 		shell_condition = new Shell(display);
 		init(shell_condition);
+		System.out.println("init结束");
 		shell_condition.setText("条件");
 		btn_add.setText("添加AND行");
 		btn_del_row.setText("删除AND行");
@@ -101,7 +147,7 @@ public class ConditionTable {
 		btn_del_col = new Button(comp1,SWT.NONE);
 		btn_del_col.setLayoutData(new GridData(SWT.NONE,SWT.NONE,false,false,1,1));
 		btn_del_col.setText("删除OR列");
-		//创建表格头
+//		创建表格头
 		tableColumn = new TableColumn(table,SWT.NONE);
 		tableColumn.setText("***");
 		tableColumn.setWidth(100);

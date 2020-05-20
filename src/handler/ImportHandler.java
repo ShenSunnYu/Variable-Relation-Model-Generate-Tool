@@ -40,6 +40,7 @@ public class ImportHandler extends AbstractHandler {
 		if (file != null) {
 			File path = new File(file);
 			ConsoleHandler.info("µº»Î:" + path.getPath());
+			System.out.println(path.getAbsolutePath());
 			try {  
 				FileInputStream fis = new FileInputStream(path);
 				XSSFWorkbook workbook = new XSSFWorkbook(fis);

@@ -7,14 +7,14 @@
          point="org.eclipse.core.runtime.applications">
       <application>
          <run
-               class="vrm_generate_tool.Application">
+               class="com.nuaa.vrm.start.Application">
          </run>
       </application>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            class="vrm_generate_tool.Perspective"
+            class="com.nuaa.vrm.start.Perspective"
             name="RCP Perspective"
             id="Variable-Relation-Model-Generate-Tool.perspective">
       </perspective>
@@ -23,7 +23,7 @@
          point="org.eclipse.ui.views">
       <view
             allowMultiple="false"
-            class="vrm_generate_tool.View"
+            class="com.nuaa.vrm.view.View"
             icon="platform:/plugin/org.eclipse.jdt.junit/icons/full/obj16/test.png"
             id="Variable-Relation-Model-Generate-Tool.view"
             inject="true"
@@ -34,13 +34,13 @@
        <view
             allowMultiple="true"
             icon="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/obj16/nested_projects.png"
-            class="vrm_generate_tool.NavigationView"
+            class="com.nuaa.vrm.view.NavigationView"
             name="需求管理器"
             id="Variable-Relation-Model-Generate-Tool.navigationView">
       </view>
       <view
             allowMultiple="false"
-            class="vrm_generate_tool.ProcessView"
+            class="com.nuaa.vrm.view.ProcessView"
             icon="platform:/plugin/org.eclipse.ui.views/icons/full/eview16/outline_co.png"
             id="Variable-Relation-Model-Generate-Tool.ProcessView"
             inject="true"
@@ -49,7 +49,7 @@
       </view>
        <view
             allowMultiple="false"
-            class="vrm_generate_tool.RequirementsView"
+            class="com.nuaa.vrm.view.RequirementsView"
             icon="platform:/plugin/org.eclipse.ui.views/icons/full/eview16/outline_co.png"
             id="Variable-Relation-Model-Generate-Tool.RequirementsView"
             inject="true"
@@ -58,89 +58,61 @@
        <view
             allowMultiple="true"
             icon="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/obj16/nested_projects.png"
-            class="vrm_generate_tool.DataTypeView"
+            class="com.nuaa.vrm.view.DataTypeView"
             name="数据类型"
             id="Variable-Relation-Model-Generate-Tool.DataTypeView">
       </view>
       <view
             allowMultiple="true"
             icon="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/obj16/nested_projects.png"
-            class="vrm_generate_tool.ProperNounView"
+            class="com.nuaa.vrm.view.ProperNounView"
             name="专有名词"
             id="Variable-Relation-Model-Generate-Tool.ProperNounView">
       </view>
       <view
             allowMultiple="true"
             icon="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/obj16/nested_projects.png"
-            class="vrm_generate_tool.ConstNumView"
+            class="com.nuaa.vrm.view.ConstNumView"
             name="常量"
             id="Variable-Relation-Model-Generate-Tool.ConstNumView">
       </view>
       <view
             allowMultiple="true"
             icon="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/obj16/nested_projects.png"
-            class="vrm_generate_tool.InputVariableView"
+            class="com.nuaa.vrm.view.InputVariableView"
             name="输入变量"
             id="Variable-Relation-Model-Generate-Tool.InputVariableView">
       </view>
       <view
             allowMultiple="true"
             icon="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/obj16/nested_projects.png"
-            class="vrm_generate_tool.OutputVariableView"
+            class="com.nuaa.vrm.view.OutputVariableView"
             name="输出变量"
             id="Variable-Relation-Model-Generate-Tool.OutputVariableView">
       </view>
       <view
             allowMultiple="true"
             icon="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/obj16/nested_projects.png"
-            class="vrm_generate_tool.MiddleVariableView"
+            class="com.nuaa.vrm.view.MiddleVariableView"
             name="中间变量"
             id="Variable-Relation-Model-Generate-Tool.MiddleVariableView">
       </view>
       <view
             allowMultiple="true"
             icon="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/obj16/nested_projects.png"
-            class="vrm_generate_tool.PatternView"
+            class="com.nuaa.vrm.view.PatternView"
             name="模式类"
             id="Variable-Relation-Model-Generate-Tool.PatternView">
       </view>
       <view
             allowMultiple="false"
-            class="vrm_generate_tool.CommonConditionView"
+            class="com.nuaa.vrm.view.RequirementSpecificationContentView"
             icon="platform:/plugin/org.eclipse.ui.views/icons/full/eview16/outline_co.png"
-            id="Variable-Relation-Model-Generate-Tool.CommonConditionView"
+            id="Variable-Relation-Model-Generate-Tool.RequirementSpecificationContentView"
             inject="true"
-            name="通用条件"
+            name="原始需求内容"
             restorable="true">
       </view>
-      <view
-            allowMultiple="false"
-            class="vrm_generate_tool.CommonEventView"
-            icon="platform:/plugin/org.eclipse.ui.views/icons/full/eview16/outline_co.png"
-            id="Variable-Relation-Model-Generate-Tool.CommonEventView"
-            inject="true"
-            name="通用事件"
-            restorable="true">
-      </view>
-      <view
-            allowMultiple="false"
-            class="vrm_generate_tool.DominantConditionView"
-            icon="platform:/plugin/org.eclipse.ui.views/icons/full/eview16/outline_co.png"
-            id="Variable-Relation-Model-Generate-Tool.DominantConditionView"
-            inject="true"
-            name="显示条件"
-            restorable="true">
-      </view>
-      <view
-            allowMultiple="false"
-            class="vrm_generate_tool.DominantEventView"
-            icon="platform:/plugin/org.eclipse.ui.views/icons/full/eview16/outline_co.png"
-            id="Variable-Relation-Model-Generate-Tool.DominantEventView"
-            inject="true"
-            name="显示事件"
-            restorable="true">
-      </view>
-     
       <view
             class="vrm_generate_tool.MenuExplorer"
             id="Variable-Relation-Model-Generate-Tool.MenuExplorer"
@@ -420,12 +392,6 @@
                icon="platform:/plugin/org.eclipse.jdt.ui/icons/full/etool16/new_testcase.png"
                label="新建"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <instanceof
-                     value="selection">
-               </instanceof>
-            </visibleWhen>
                
          </command>
          <command             
@@ -465,7 +431,7 @@
             commandId="Variable-Relation-Model-Generate-Tool.helpCommand">
       </handler>
       <handler
-            class="handler.ImportHandler"
+            class="com.nuaa.vrm.handler.ImportHandler"
             commandId="Variable-Relation-Model-Generate-Tool.importCommand">
       </handler>
    </extension>

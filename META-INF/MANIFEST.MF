@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Variable-Relation-Model-Generate-Tool
 Bundle-SymbolicName: Variable-Relation-Model-Generate-Tool;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: variable_relation_model_generate_tool.Activator
+Bundle-Activator: com.nuaa.vrm.start.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.apache.felix.scr,

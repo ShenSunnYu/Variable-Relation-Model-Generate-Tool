@@ -179,7 +179,7 @@ public class ConditionTable {
 				}
 			}
 		});
-//   	
+  	
         btn_add.addListener(SWT.MouseDown,new Listener() {
 			@Override
 			public void handleEvent(Event event) {

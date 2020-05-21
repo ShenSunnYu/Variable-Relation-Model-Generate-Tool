@@ -27,12 +27,13 @@ import org.eclipse.ui.part.ViewPart;
 
 
 /**
- * 
- * @author 展万里
- * 
- * 通用条件页面
- *
+ * @PackageName:com.nuaa.vrm.view
+ * @ClassName:RequirementSpecificationContentView
+ * @Description:关于需求规范化的视图界面
+ * @Author:展万里
+ * @Date:2020/5/7 16:39
  */
+
 public class RequirementSpecificationContentView extends ViewPart implements ISelectionListener{
 
 	public static final String ID = "Variable-Relation-Model-Generate-Tool.RequirementSpecificationContentView";

@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
 /**
- * @PackageName:vrm_generate_tool
+ * @PackageName:com.nuaa.vrm.view
  * @ClassName:Condition_Event_Table
  * @Description:关于事件的表格类
  * @Author:展万里
